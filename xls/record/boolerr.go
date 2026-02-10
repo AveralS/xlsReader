@@ -1,7 +1,7 @@
 package record
 
 import (
-	"github.com/shakinm/xlsReader/helpers"
+	"github.com/AveralS/xlsReader/helpers"
 	"reflect"
 	"strconv"
 )

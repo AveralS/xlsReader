@@ -2,11 +2,12 @@ package record
 
 import (
 	"bytes"
-	"github.com/shakinm/xlsReader/xls/structure"
 	"strings"
+
+	"github.com/AveralS/xlsReader/xls/structure"
 )
 
-//This record stores the sheet name, sheet type, and stream position
+// This record stores the sheet name, sheet type, and stream position
 var BoundSheetRecord = [2]byte{0x85, 0x00} //(85h)
 
 /*
@@ -42,7 +43,6 @@ type BoundSheet struct {
 	Rgch     []byte
 	stFormat structure.XLUnicodeRichExtendedString
 	vers     []byte
-
 }
 
 func (r *BoundSheet) Read(stream []byte, vers []byte) {
@@ -55,7 +55,7 @@ func (r *BoundSheet) Read(stream []byte, vers []byte) {
 
 	if bytes.Compare(vers, FlagBIFF8) == 0 {
 
-		fixedStream:=[]byte{r.Cch[0],0x00}
+		fixedStream := []byte{r.Cch[0], 0x00}
 		fixedStream = append(fixedStream, stream[7:]...)
 		_ = r.stFormat.Read(fixedStream)
 
@@ -70,4 +70,8 @@ func (r *BoundSheet) GetName() string {
 	}
 	strLen := int(r.Cch[0])
 	return strings.TrimSpace(string(decodeWindows1251(bytes.Trim(r.Rgch[:int(strLen)], "\x00"))))
+}
+
+func (r *BoundSheet) Hidden() bool {
+	return r.Grbit[0]&0x03 == 0x01
 }
