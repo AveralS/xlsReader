@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/AveralS/xlsReader/helpers"
 	"github.com/AveralS/xlsReader/xls/structure"
-	"github.com/metakeule/fmtdate"
+	"gitlab.com/metakeule/fmtdate"
 	"strconv"
 	"strings"
 )
